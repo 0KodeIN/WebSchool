@@ -1,0 +1,30 @@
+.label-login{
+    margin-left: 13vw;
+}
+.auth_form{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100px;
+    margin: 100px auto;
+    box-sizing: border-box;
+}
+.login-btn{
+  background: #079BCF;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-size: 27px;
+  height: 72px;
+  width: 100%;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: all .3s cubic-bezier(.6,0,.4,1);
+}
+.login-btn:hover {
+    background: #007BA5;
+}
+.login-text{
+    width: 96px;
+}
