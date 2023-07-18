@@ -14,13 +14,6 @@ class UserCreateController extends Controller
     public function index()
     {
 
-        // foreach (Student::all() as $student) {
-        //     return $student->phone;
-        // }
-        // $value = json_encode(Student::all(),JSON_UNESCAPED_UNICODE);
-        // return $value;
-
-
     }
     public function create(Request $request)
     {
@@ -124,91 +117,6 @@ class UserCreateController extends Controller
             $response = DB::table('teachers')->where('id_teacher', '=', $user[0]->id_teacher)->delete();
         }
         return $response;
-
-   
-
-        // return $students;
-        // $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-        //     'password' => ['required'],
-        // ]);
-        // Rules\Password::defaults();
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password), 
-        // ]);
-        // if($request->role == 'Ученик'){
-        //     DB::table('students')->insert([
-        //         'student_name' => $request->p_name,
-        //         'student_surname' => $request->p_surname,
-        //         'student_patronomyc' => $request->p_patronomyc,
-        //         'adress' => $request->adress,
-        //         'phone' => $request->phone,
-        //         'id_class' => 102,
-        //     ]);
-        //     $students = DB::table('students')
-        //     ->select('student_id')
-        //     ->where('student_name', '=', $request->p_name)
-        //     ->get();
-
-        //     $affected = DB::table('users')
-        //     ->where('name', $request->name)
-        //     ->update(['student_id' => $students[0]->student_id]);
-
-        //     return $students;
-        // }
-        // if($request->role == 'Учитель'){
-        //     DB::table('teachers')->insert([
-        //         'teacher_name' => $request->p_name,
-        //         'teacher_surname' => $request->p_surname,
-        //         'teacher_patronomyc' => $request->p_patronomyc,
-        //         'teacher_phone' => $request->phone,
-        //     ]);
-        //     $teachers = DB::table('teachers')
-        //     ->select('id_teacher')
-        //     ->where('teacher_name', '=', $request->p_name)
-        //     ->get();
-
-        //     $affected = DB::table('users')
-        //     ->where('name', $request->name)
-        //     ->update(['id_teacher' => $teachers[0]->id_teacher]);
-
-        //     if($request->subject1 != null){
-        //         $teacher_subject1 = DB::table('subjects')
-        //         ->select('id_subject')
-        //         ->where('subject_name', '=', $request->subject1)
-        //         ->get();
-        //         DB::table('teacher_subjects')->insert([
-        //             'id_teacher' => $teachers[0]->id_teacher,
-        //             'id_subject' => $teacher_subject1[0]->id_subject,
-        //         ]);
-        //     }
-        //     if($request->subject2 != null){
-        //         $teacher_subject2 = DB::table('subjects')
-        //         ->select('id_subject')
-        //         ->where('subject_name', '=', $request->subject2)
-        //         ->get();
-        //         DB::table('teacher_subjects')->insert([
-        //             'id_teacher' => $teachers[0]->id_teacher,
-        //             'id_subject' => $teacher_subject2[0]->id_subject,
-        //         ]);
-        //     }
-        //     if($request->subject3 != null){
-        //         $teacher_subject3 = DB::table('subjects')
-        //         ->select('id_subject')
-        //         ->where('subject_name', '=', $request->subject3)
-        //         ->get();
-        //         DB::table('teacher_subjects')->insert([
-        //             'id_teacher' => $teachers[0]->id_teacher,
-        //             'id_subject' => $teacher_subject3[0]->id_subject,
-        //         ]);
-        //     }
-
-        //     return $teachers;
-        // }
-        
 
     }
 }

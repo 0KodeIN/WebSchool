@@ -26,7 +26,7 @@ class ConfigController extends Controller
             $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
             $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn);
             $array = []; $i = 0; $j = 0;
-            //echo '<table>' . "\n";
+
             for ($row = 2; $row <= $highestRow; ++$row) {
                 
                 for ($col = 1; $col <= $highestColumnIndex; ++$col) {
@@ -41,19 +41,14 @@ class ConfigController extends Controller
                        
                     }
                     $j++;
-                    // echo mb_detect_encoding($value) . " ";
-                    //echo '<td>' . $value . '</td>' . PHP_EOL;
+
                 }
                 $i++; $j = 0;
-                //echo '</tr>' . PHP_EOL;
+               
             }
-            // echo  $array[1][4] . " "; 
+           
             $j = 0;
-            // for($i = 0; $i < 2; $i++){
-            //     for($j = 0; $j < 6; $j++){
-            //         echo $array[$i][$j] . " ";
-            //     }
-            // }
+           
             for ($i = 0; $i < $highestRow-1; $i++) {
                 
                     DB::table('subjects')->insert([
@@ -160,19 +155,13 @@ class ConfigController extends Controller
                        
                     }
                     $j++;
-                    // echo mb_detect_encoding($value) . " ";
-                    //echo '<td>' . $value . '</td>' . PHP_EOL;
                 }
                 $i++; $j = 0;
-                //echo '</tr>' . PHP_EOL;
+
             }
-            // echo  $array[1][4] . " "; 
+
             $j = 0;
-            // for($i = 0; $i < 2; $i++){
-            //     for($j = 0; $j < 6; $j++){
-            //         echo $array[$i][$j] . " ";
-            //     }
-            // }
+
             for ($i = 0; $i < $highestRow-1; $i++) {
                 $teacher = DB::table('teachers')
                 ->select('*')
@@ -189,14 +178,6 @@ class ConfigController extends Controller
 
             }
 
-
-            //echo '</table>' . PHP_EOL;
-            // $activeWorksheet = $spreadsheet->getActiveSheet();
-            // $activeWorksheet->setCellValue('A1', 'Ботки !');
-            // $writer = new Xlsx($spreadsheet);
-            // $writer->save('storage/news/timetable.xlsx');
-            // return 'http://127.0.0.1:8000/storage/news/timetable.xlsx';
-            // return $array;
         }
         else{
             return 'Файл не загружен';
@@ -208,6 +189,28 @@ class ConfigController extends Controller
             ->select('*')
             ->get();
         return $offices;
+    }
+    public function setFileLiterature(Request $request){
+        
+        if ($request->hasFile('file')) {
+            $file = $request->input('file');
+            $name = basename($file);
+            $path = $request->file('file','lit')->storeAs('literature','РусЯз.docx'); 
+            $url = 'http://127.0.0.1:8000/storage/literature/РусЯз.docx';
+
+            DB::table('literature')->insert([
+                'lit_name' => 'Задачник',
+                'lit_url' => $url,
+                'id_subject_teacher' => 10007,
+                'id_class' => 102,
+            ]);
+            return $url;
+
+        }
+        else{
+            return 'Файл не загружен';
+        }
+       
     }
     public function getPosts(){
 
@@ -251,25 +254,15 @@ class ConfigController extends Controller
 public function getDasboard(Request $request){
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-/* Note: any element you append to a document must reside inside of a Section. */
-
-// Adding an empty Section to the document...
 $section = $phpWord->addSection();
-// Adding Text element to the Section having font styled by default...
+
 $section->addText(
     '"Learn from yesterday, live for today, hope for tomorrow. '
         . 'The important thing is not to stop questioning." '
         . '(Albert Einstein)'
 );
 
-/*
- * Note: it's possible to customize font style of the Text element you add in three ways:
- * - inline;
- * - using named font style (new font style object will be implicitly created);
- * - using explicitly created font style object.
- */
 
-// Adding Text element with font customized inline...
 $section->addText(
     '"Great achievement is usually born of great sacrifice, '
         . 'and is never the result of selfishness." '
@@ -290,7 +283,6 @@ $section->addText(
     $fontStyleName
 );
 
-// Adding Text element with font customized using explicitly created font style object...
 $fontStyle = new \PhpOffice\PhpWord\Style\Font();
 $fontStyle->setBold(true);
 $fontStyle->setName('Tahoma');
@@ -298,15 +290,12 @@ $fontStyle->setSize(13);
 $myTextElement = $section->addText('"Believe you can and you\'re halfway there." (Theodor Roosevelt)');
 $myTextElement->setFontStyle($fontStyle);
 
-// Saving the document as OOXML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 $objWriter->save('helloWorld.docx');
 
-// Saving the document as ODF file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
 $objWriter->save('helloWorld.odt');
 
-// Saving the document as HTML file...
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
 $objWriter->save('helloWorld.html');
 $url = 'http://127.0.0.1:8000/helloWorld.docx';
